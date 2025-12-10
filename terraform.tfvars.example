@@ -1,0 +1,36 @@
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to git!
+
+project_name = "h3ow3d"
+environment  = "production"
+aws_region   = "eu-west-2"
+
+# Infrastructure Module Version
+# Use git tags for production: "v1.0.0", "v1.1.0", etc.
+# Use "main" for latest development version
+# Use commit SHA for specific version: "abc123def456"
+infra_module_version = "v1.0.0"
+
+# Google OAuth Credentials (get from Google Cloud Console)
+google_client_id     = "your-google-client-id.apps.googleusercontent.com"
+google_client_secret = "your-google-client-secret"
+
+# Network Configuration
+vpc_cidr           = "10.0.0.0/16"
+availability_zones = ["eu-west-2a", "eu-west-2b"]
+
+# ECS Configuration
+auth_service_desired_count = 2
+auth_service_cpu           = 256  # 0.25 vCPU
+auth_service_memory        = 512  # 512 MB
+auth_service_image_tag     = "latest"  # or specific version like "v1.2.3"
+
+# Application Configuration
+allowed_origins = ["https://yourdomain.com", "http://localhost:5173"]
+domain_name     = ""  # Optional: your custom domain
+
+# Additional Tags
+tags = {
+  Owner       = "YourName"
+  CostCenter  = "Personal"
+}
