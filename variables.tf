@@ -16,12 +16,6 @@ variable "aws_region" {
   default     = "eu-west-2"
 }
 
-variable "infra_module_version" {
-  description = "Git ref for h3ow3d-infra modules (tag, branch, or commit SHA)"
-  type        = string
-  default     = "main"  # Change to a tag like "v1.0.0" for production
-}
-
 variable "google_client_id" {
   description = "Google OAuth 2.0 client ID for Social Identity Provider"
   type        = string

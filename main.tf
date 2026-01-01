@@ -1,5 +1,7 @@
 # Main deployment orchestration
-# This file composes modules from h3ow3d-infra repository
+# This file composes modules from GitHub repositories
+# Note: Module source must be static - cannot use variables or locals
+# To update module versions, change the ?ref= value directly
 
 locals {
   common_tags = merge(var.tags, {
@@ -7,14 +9,11 @@ locals {
     Environment = var.environment
     ManagedBy   = "terraform"
   })
-  
-  # Module version to use (git ref: tag, branch, or commit SHA)
-  infra_version = var.infra_module_version
 }
 
 # Networking Module
 module "networking" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra.git//modules/networking?ref=${local.infra_version}"
+  source = "git::https://github.com/h3ow3d/h3ow3d-infra-networking.git?ref=main"
 
   project_name       = var.project_name
   environment        = var.environment
@@ -25,7 +24,7 @@ module "networking" {
 
 # ECS Cluster Module
 module "ecs_cluster" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra.git//modules/ecs-cluster?ref=${local.infra_version}"
+  source = "git::https://github.com/h3ow3d/h3ow3d-infra-ecs-cluster.git?ref=main"
 
   project_name = var.project_name
   environment  = var.environment
@@ -34,7 +33,7 @@ module "ecs_cluster" {
 
 # Cognito Module
 module "cognito" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra.git//modules/cognito?ref=${local.infra_version}"
+  source = "git::https://github.com/h3ow3d/h3ow3d-infra-cognito.git?ref=main"
 
   project_name         = var.project_name
   environment          = var.environment
@@ -49,17 +48,16 @@ module "cognito" {
 
 # Frontend Module (S3 + CloudFront + Artifacts)
 module "frontend" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra.git//modules/frontend?ref=${local.infra_version}"
+  source = "git::https://github.com/h3ow3d/h3ow3d-infra-frontend.git?ref=main"
 
   project_name = var.project_name
   environment  = var.environment
-  domain_name  = var.domain_name
   tags         = local.common_tags
 }
 
 # Auth Service Module (Generic ECS Service)
 module "auth_service" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra.git//modules/ecs-service?ref=${local.infra_version}"
+  source = "git::https://github.com/h3ow3d/h3ow3d-infra-ecs-service.git?ref=main"
 
   project_name       = var.project_name
   environment        = var.environment
@@ -117,11 +115,9 @@ module "auth_service" {
 
 # CloudWatch RUM Module
 module "monitoring" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra.git//modules/monitoring?ref=${local.infra_version}"
+  source = "git::https://github.com/h3ow3d/h3ow3d-infra-monitoring.git?ref=main"
 
-  project_name          = var.project_name
-  environment           = var.environment
-  cloudfront_domain     = module.frontend.cloudfront_domain_name
-  cognito_identity_pool = module.cognito.identity_pool_id
-  tags                  = local.common_tags
+  project_name = var.project_name
+  environment  = var.environment
+  tags         = local.common_tags
 }
