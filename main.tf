@@ -13,7 +13,7 @@ locals {
 
 # Networking Module
 module "networking" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra-networking.git?ref=main"
+  source = "git::https://github.com/stackgobrr/tf-module-aws-networking.git?ref=main"
 
   project_name       = var.project_name
   environment        = var.environment
@@ -24,7 +24,7 @@ module "networking" {
 
 # ECS Cluster Module
 module "ecs_cluster" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra-ecs-cluster.git?ref=main"
+  source = "git::https://github.com/stackgobrr/tf-module-aws-ecs-cluster.git?ref=main"
 
   project_name = var.project_name
   environment  = var.environment
@@ -33,7 +33,7 @@ module "ecs_cluster" {
 
 # Cognito Module
 module "cognito" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra-cognito.git?ref=main"
+  source = "git::https://github.com/stackgobrr/tf-module-aws-cognito.git?ref=main"
 
   project_name         = var.project_name
   environment          = var.environment
@@ -48,7 +48,7 @@ module "cognito" {
 
 # Frontend Module (S3 + CloudFront + Artifacts)
 module "frontend" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra-frontend.git?ref=main"
+  source = "git::https://github.com/stackgobrr/tf-module-aws-frontend.git?ref=main"
 
   project_name = var.project_name
   environment  = var.environment
@@ -57,7 +57,7 @@ module "frontend" {
 
 # Auth Service Module (Generic ECS Service)
 module "auth_service" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra-ecs-service.git?ref=main"
+  source = "git::https://github.com/stackgobrr/tf-module-aws-ecs-service.git?ref=main"
 
   project_name       = var.project_name
   environment        = var.environment
@@ -115,7 +115,7 @@ module "auth_service" {
 
 # CloudWatch RUM Module
 module "monitoring" {
-  source = "git::https://github.com/h3ow3d/h3ow3d-infra-monitoring.git?ref=main"
+  source = "git::https://github.com/stackgobrr/tf-module-aws-monitoring.git?ref=main"
 
   project_name = var.project_name
   environment  = var.environment
